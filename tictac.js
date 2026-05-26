@@ -4,9 +4,9 @@ let dabba = document.querySelector(".dabba");
 let para = document.querySelector("#para");
 let new_game = document.querySelector("#new_game");
 
-let scoreO = document.querySelector("#scoreO");
-let scoreX = document.querySelector("#scoreX");
-let scoreDraw = document.querySelector("#scoreDraw");
+let scoreOEl = document.getElementById("scoreO");
+let scoreXEl = document.getElementById("scoreX");
+let scoreDrawEl = document.getElementById("scoreDraw");
 
 let turn = true;
 let count = 0;
@@ -14,37 +14,38 @@ let scores = { O: 0, X: 0, D: 0 };
 
 let win_patterns = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
-// Sound effects (Web Audio API - koi file nahi chahiye!)
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
+// Sound effects - Web Audio API
 function playSound(type) {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
 
-    if (type === 'click') {
-        osc.frequency.setValueAtTime(520, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.15);
-    } else if (type === 'win') {
-        osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-        osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.15);
-        osc.frequency.setValueAtTime(800, audioCtx.currentTime + 0.3);
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.5);
-    } else if (type === 'draw') {
-        osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-        osc.frequency.setValueAtTime(250, audioCtx.currentTime + 0.2);
-        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.4);
-    }
+        if (type === 'click') {
+            osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.15);
+        } else if (type === 'win') {
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.15);
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime + 0.3);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.5);
+        } else if (type === 'draw') {
+            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(250, audioCtx.currentTime + 0.2);
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.4);
+        }
+    } catch(e) {}
 }
 
 let resetbtn = () => {
@@ -68,13 +69,13 @@ ground.forEach((box) => {
 
         // Pop animation
         box.classList.remove("pop");
-        void box.offsetWidth; // reflow trick
+        void box.offsetWidth;
         box.classList.add("pop");
 
-        // Click sound
         playSound('click');
 
         count++;
+
         let iswinner = checkwinner();
         if (count === 9 && !iswinner) {
             gamedraw();
@@ -87,46 +88,45 @@ const gamedraw = () => {
     dabba.classList.remove("hide");
     disablegrounds();
     scores.D++;
-    scoreDraw.innerText = scores.D;
+    scoreDrawEl.innerText = scores.D;
     playSound('draw');
 };
 
 let disablegrounds = () => {
-    for (let grounds of ground) {
-        grounds.disabled = true;
+    for (let g of ground) {
+        g.disabled = true;
     }
 };
 
 let enablegrounds = () => {
-    for (let grounds of ground) {
-        grounds.disabled = false;
-        grounds.innerText = "";
-        grounds.classList.remove("winner-box", "pop");
+    for (let g of ground) {
+        g.disabled = false;
+        g.innerText = "";
+        g.classList.remove("winner-box", "pop");
     }
 };
 
 let endwin = (winner) => {
-    para.innerText = Congrats '${winner}' You are a Winner!;
+    para.innerText = Congrats "${winner}" You are a Winner! 🎉;
     dabba.classList.remove("hide");
     disablegrounds();
     scores[winner]++;
-    if (winner === 'O') scoreO.innerText = scores.O;
-    else scoreX.innerText = scores.X;
+    scoreOEl.innerText = scores.O;
+    scoreXEl.innerText = scores.X;
     playSound('win');
 };
 
 let checkwinner = () => {
-    for (let patterns of win_patterns) {
-        let p1 = ground[patterns[0]].innerText;
-        let p2 = ground[patterns[1]].innerText;
-        let p3 = ground[patterns[2]].innerText;
+    for (let pattern of win_patterns) {
+        let p1 = ground[pattern[0]].innerText;
+        let p2 = ground[pattern[1]].innerText;
+        let p3 = ground[pattern[2]].innerText;
 
-        if (p1 != "" && p2 != "" && p3 != "") {
+        if (p1 !== "" && p2 !== "" && p3 !== "") {
             if (p1 === p2 && p2 === p3) {
-                // Winner cells highlight
-                ground[patterns[0]].classList.add("winner-box");
-                ground[patterns[1]].classList.add("winner-box");
-                ground[patterns[2]].classList.add("winner-box");
+                ground[pattern[0]].classList.add("winner-box");
+                ground[pattern[1]].classList.add("winner-box");
+                ground[pattern[2]].classList.add("winner-box");
                 endwin(p1);
                 return true;
             }
