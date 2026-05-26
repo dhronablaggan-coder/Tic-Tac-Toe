@@ -12,15 +12,27 @@
     <div class="sabkuch">
     <h1>Tic Tac Toe Game</h1>
 
+    <div class="score-board">
+        <div class="score-card">
+            <span class="score-label">O</span>
+            <span class="score-num" id="scoreO">0</span>
+        </div>
+        <div class="score-card draw-card">
+            <span class="score-label">Draw</span>
+            <span class="score-num" id="scoreDraw">0</span>
+        </div>
+        <div class="score-card">
+            <span class="score-label">X</span>
+            <span class="score-num" id="scoreX">0</span>
+        </div>
+    </div>
 
     <div class="dabba hide">
-    <p id="para">WINNER</p>
-    <button id="new_game">New Game</button>
-</div>
-</div>
+        <p id="para">WINNER</p>
+        <button id="new_game">New Game</button>
+    </div>
+    </div>
 
-
-<!-- <div class =" visible" id = "draw">Match is DRAW</div> -->
     <div class="container">
     <div class="design">
         <button class ="box"></button>
@@ -35,14 +47,9 @@
     </div>
     </div>
 
-
     <button id="reset"> -- Reset Button --</button>
 </main>
 
-
-
-
     <script src ="tictac.js"></script>
-    
 </body>
 </html>
