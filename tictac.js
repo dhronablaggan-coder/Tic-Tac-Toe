@@ -58,11 +58,11 @@ let resetbtn = () => {
 ground.forEach((box) => {
     box.addEventListener("click", () => {
         if (turn) {
-            box.innerText = "O";
+            box.textContent = "O";
             box.disabled = true;
             turn = false;
         } else {
-            box.innerText = "X";
+            box.textContent = "X";
             box.disabled = true;
             turn = true;
         }
@@ -101,13 +101,13 @@ let disablegrounds = () => {
 let enablegrounds = () => {
     for (let g of ground) {
         g.disabled = false;
-        g.innerText = "";
+        g.textContent = "";
         g.classList.remove("winner-box", "pop");
     }
 };
 
 let endwin = (winner) => {
-    para.innerText = Congrats "${winner}" You are a Winner! 🎉;
+    para.innerText = `Congrats "${winner}" You are a Winner! 🎉;`
     dabba.classList.remove("hide");
     disablegrounds();
     scores[winner]++;
@@ -118,9 +118,9 @@ let endwin = (winner) => {
 
 let checkwinner = () => {
     for (let pattern of win_patterns) {
-        let p1 = ground[pattern[0]].innerText;
-        let p2 = ground[pattern[1]].innerText;
-        let p3 = ground[pattern[2]].innerText;
+        let p1 = ground[pattern[0]].textContent;
+        let p2 = ground[pattern[1]].textContent;
+        let p3 = ground[pattern[2]].textContent;
 
         if (p1 !== "" && p2 !== "" && p3 !== "") {
             if (p1 === p2 && p2 === p3) {
