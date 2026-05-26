@@ -136,4 +136,4 @@ let checkwinner = () => {
 };
 
 new_game.addEventListener("click", resetbtn);
-reset.addEventListener("click", resetbtn);
+reset.addEventListener("click", resetbtn)
