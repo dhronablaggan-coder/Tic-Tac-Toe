@@ -1,7 +1,4 @@
-* {
-    padding: 0;
-    margin: 0;
-}
+* { padding: 0; margin: 0; }
 
 body {
     background: linear-gradient(135deg, #1a1a4e, #3e3eaf, #26c59d);
@@ -27,7 +24,7 @@ h1 {
 }
 
 .score-card {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255,255,255,0.15);
     backdrop-filter: blur(8px);
     border: 1.5px solid rgba(255,255,255,0.25);
     border-radius: 16px;
@@ -56,19 +53,16 @@ h1 {
 .container {
     height: 75vh;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 }
 
-/* Grid */
+/* Grid - 3x3 fixed */
 .design {
     height: 58vmin;
     width: 58vmin;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-    align-items: center;
     gap: 16px;
     background-color: rgba(97, 73, 147, 0.41);
     border: 1.2px solid rgba(255,255,255,0.3);
@@ -79,32 +73,27 @@ h1 {
 
 /* Boxes */
 .box {
-    height: 17vmin;
-    width: 17vmin;
     border: none;
     border-radius: 20px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.4);
     font-size: 35px;
     font-weight: 800;
     color: rgb(96, 38, 70);
-    background-color: rgba(245, 245, 245, 0.858);
+    background-color: rgba(245,245,245,0.858);
     cursor: pointer;
     transition: transform 0.1s ease, box-shadow 0.15s ease;
 }
 
 .box:hover:not(:disabled) {
-    box-shadow: 0 4px 18px rgba(1, 2, 3, 0.9);
+    box-shadow: 0 4px 18px rgba(1,2,3,0.9);
     transform: scale(1.05);
 }
 
-.box:active:not(:disabled) {
-    transform: scale(0.95);
-}
+.box:active:not(:disabled) { transform: scale(0.95); }
 
-/* Pop animation */
+/* Pop animation on click */
 .box.pop {
     animation: popIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    color:rgba(96,38,70);
 }
 
 @keyframes popIn {
@@ -112,22 +101,15 @@ h1 {
     100% { transform: scale(1); }
 }
 
-/* Winner glow */
+/* Winner glow - color forced visible */
 .box.winner-box {
-    background-color: rgba(251, 191, 36, 0.5) !important;
-    color:rgba(96,38,70)!important
-    animation: winGlow 0.5s ease forwards;
+    background-color: rgba(251,191,36,0.5) !important;
+    color: rgb(96, 38, 70) !important;
+    box-shadow: 0 0 24px rgba(251,191,36,0.9) !important;
 }
 
-@keyframes winGlow {
-    0%   { box-shadow: 0 0 0 rgba(251,191,36,0); }
-    100% { box-shadow: 0 0 24px rgba(251,191,36,0.9); }
-}
-
-/* Winner/Draw popup */
-.sabkuch {
-    position: relative;
-}
+/* Popup */
+.sabkuch { position: relative; }
 
 .dabba {
     background: rgba(255,255,255,0.15);
@@ -161,9 +143,7 @@ h1 {
     transition: background 0.2s;
 }
 
-#new_game:hover {
-    background: rgba(255,255,255,0.35);
-}
+#new_game:hover { background: rgba(255,255,255,0.35); }
 
 /* Reset Button */
 #reset {
@@ -185,6 +165,4 @@ h1 {
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
-.hide {
-    display: none;
-}
+.hide { display: none; }
