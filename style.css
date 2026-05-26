@@ -166,3 +166,9 @@ h1 {
 }
 
 .hide { display: none; }
+
+
+.box:disabled{
+    color:black;
+    opacity:1;
+}
